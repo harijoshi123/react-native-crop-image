@@ -12,7 +12,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import CropImage from 'react-native-crop-image';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   state = {
     status: 'starting',
     message: '--'
