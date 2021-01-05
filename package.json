@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-crop-image.git",
-    "baseUrl": "https://github.com/github_account/react-native-crop-image"
+    "url": "git+http://repo.ftechiz.com/harijoshi/react-native-crop-image.git",
+    "baseUrl": "http://repo.ftechiz.com/harijoshi/react-native-crop-image"
   },
   "keywords": [
     "react-native"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "Harishankar Joshi",
+    "email": "hari.joshi@ftechiz.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
