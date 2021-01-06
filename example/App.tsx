@@ -1,20 +1,47 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {NativeEventEmitter, StyleSheet, Text, View} from 'react-native';
 import CropImage from 'react-native-crop-image';
 
 export default class App extends Component<{}> {
   state = {
     status: 'starting',
     message: '--',
+    status1: 'Starting',
+    promise: '--',
+    threeDifferentTypesMethod: null
   };
-  componentDidMount() {
-    CropImage.sampleMethod('Testing', 123, (message: any) => {
+  // eventListener: any;
+  async componentDidMount() {
+    // event Listener
+    const eventEmitter = new NativeEventEmitter(CropImage);
+    this.eventListener = eventEmitter.addListener('EventReminder', (event) => {
+        console.log('eventListener', event.event);
+    });
+    // end event Listener
+    CropImage.callbackMethod('Testing', 123, (message: any) => {
       this.setState({
         status: 'native callback received',
         message,
       });
     });
+    
+    // call promise function
+    let promise = await CropImage.promiseMethod('Testing', 123);
+    this.setState({
+      status1: 'native promise received',
+      promise,
+    });
+    // call promise function
+    let threeDifferentTypesMethod = await CropImage.threeDifferentTypesMethod('Testing', 123, true);
+    this.setState({
+      threeDifferentTypesMethod,
+    });
   }
+
+  componentWillUnmount() {
+    this.eventListener.remove(); //Removes the listener
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,6 +49,15 @@ export default class App extends Component<{}> {
         <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
         <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
         <Text style={styles.instructions}>{this.state.message}</Text>
+        
+        <Text style={styles.instructions}>STATUS: {this.state.status1}</Text>
+        <Text style={styles.welcome}>☆NATIVE PROMISE MESSAGE☆</Text>
+        <Text style={styles.instructions}>{this.state.promise}</Text>
+
+        <Text style={styles.welcome}>☆Show Constent☆</Text>
+        <Text style={styles.instructions}>LONG: {CropImage.LONG}, SHORT: {CropImage.LONG}</Text>
+        <Text style={styles.welcome}>☆Show Three Different Types Of Input Parameters☆</Text>
+        <Text style={styles.instructions}>{JSON.stringify(this.state.threeDifferentTypesMethod)}</Text>
       </View>
     );
   }
